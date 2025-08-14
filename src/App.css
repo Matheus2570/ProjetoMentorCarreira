@@ -1,0 +1,59 @@
+.container {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  max-width: 600px; /* Limite máximo para desktop */
+  min-width: 300px; /* Mínimo para celular */
+  margin: 0 auto; /* Centraliza horizontalmente */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  text-align: center; /* Centraliza texto e elementos */
+}
+
+h1 {
+  color: #333;
+  font-size: 1.5rem; /* Tamanho ajustado para telas menores */
+  margin-bottom: 1rem;
+}
+
+.text-input {
+  width: 90%; /* Usa 90% para evitar bordas nas laterais em telas pequenas */
+  padding: 10px;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: vertical;
+  display: block; /* Garante que fique centralizado */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button {
+  display: block; /* Garante que fique centralizado */
+  margin: 1rem auto; /* Centraliza e adiciona espaçamento */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.response-container {
+  margin-top: 1.5rem;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 90%; /* Limita a largura em telas menores */
+  margin-left: auto;
+  margin-right: auto; /* Centraliza */
+  text-align: left; /* Mantém o texto da resposta alinhado à esquerda */
+}

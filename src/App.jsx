@@ -1,65 +1,92 @@
+// src/App.jsx
 import React, { useState } from "react";
-import axios from "axios";
+import { enviarPerguntaAoMentor } from "./pergunta";
 import "./App.css";
-
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-
 
 function App() {
   const [pergunta, setPergunta] = useState("");
   const [resposta, setResposta] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const enviarPergunta = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!pergunta.trim()) return;
+
     setLoading(true);
     setResposta("");
-
-    const prompt = `
-Você é um mentor de carreira especializado no contexto educacional do SESI e SENAI, com profundo conhecimento sobre cursos técnicos, programas de aprendizagem industrial, oportunidades de estágio, provas internas e externas, ingresso em faculdades e mercado de trabalho.
-Seu papel é orientar alunos sobre caminhos acadêmicos e profissionais, explicando opções de formação, requisitos, prazos e estratégias para aprovação em provas, vestibulares e processos seletivos.
-Sempre dê respostas claras, práticas e contextualizadas para a realidade dos estudantes do SESI e SENAI, incluindo dicas de estudo, planejamento de carreira e oportunidades relacionadas à indústria e tecnologia.
-Agora, analise e responda à seguinte pergunta do usuário: ${pergunta}
-`;
-
     try {
-      const { data } = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-        {
-          contents: [{ parts: [{ text: prompt }] }],
-        },
-        { headers: { "Content-Type": "application/json" } }
-      );
-
-      const respostaApi =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sem resposta";
-      setResposta(respostaApi);
+      const texto = await enviarPerguntaAoMentor(pergunta);
+      setResposta(texto);
     } catch (err) {
-      console.error(err);
-      setResposta("Erro ao conectar com a API.");
+      setResposta("Erro: " + err.message);
     } finally {
       setLoading(false);
     }
   };
 
+  const copiarLaTeX = () => {
+    navigator.clipboard.writeText(resposta);
+    alert("Código LaTeX copiado para a área de transferência!");
+  };
+
+  // Botão atualizado: abre seus projetos do Overleaf + cola o código automaticamente
+  const abrirNoOverleaf = () => {
+  window.open("https://www.overleaf.com/project", "_blank");
+};
+
+
+  const temLaTeX = resposta.includes("\\documentclass");
+
   return (
-    <div className="container">
-      <h1>Mentor de Carreira (React Web)</h1>
-      <textarea
-        placeholder="Digite sua pergunta..."
-        value={pergunta}
-        onChange={(e) => setPergunta(e.target.value.slice(0, 500))}
-        rows={4}
-        className="text-input"
-      />
-      <button
-        onClick={enviarPergunta}
-        className="button"
-        disabled={!pergunta.trim() || loading}
-      >
-        {loading ? "Carregando..." : "Perguntar"}
-      </button>
-      {resposta && <div className="response-container">{resposta}</div>}
+    <div className="app-container">
+      <div className="mentor-card">
+        <header className="header">
+          <h1>Mentor de Carreira</h1>
+          <p className="subtitle">SESI • SENAI • Unicamp • ITA • Futuro</p>
+        </header>
+
+        <main className="main-content">
+          <form onSubmit={handleSubmit} className="input-area">
+            <textarea
+              value={pergunta}
+              onChange={(e) => setPergunta(e.target.value)}
+              placeholder="Ex: Monte um plano de estudos completo para Matemática na Unicamp 2026, 3h por dia"
+              rows="4"
+              className="pergunta-input"
+              disabled={loading}
+            />
+            <button type="submit" disabled={loading} className="send-btn">
+              {loading ? "Pensando..." : "Enviar Pergunta"}
+            </button>
+          </form>
+
+          {resposta && (
+            <div className="resposta-area">
+              <div className="resposta-card">
+                <pre className="resposta-texto">{resposta}</pre>
+              </div>
+
+              {/* BOTÕES MÁGICOS */}
+              {temLaTeX && (
+                <div className="latex-botoes">
+                  <button onClick={copiarLaTeX} className="btn-copiar">
+                    Copiar código LaTeX
+                  </button>
+
+                  {/* Botão atualizado com o link que você pediu */}
+                  <button onClick={abrirNoOverleaf} className="btn-overleaf">
+                    Abrir no Overleaf
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </main>
+
+        <footer className="footer">
+          <p>Desenvolvido com carinho para quem vai conquistar a Unicamp • 2025</p>
+        </footer>
+      </div>
     </div>
   );
 }

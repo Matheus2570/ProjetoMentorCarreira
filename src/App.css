@@ -1,59 +1,36 @@
-.container {
-  padding: 1rem;
-  font-family: Arial, sans-serif;
-  max-width: 600px; /* Limite máximo para desktop */
-  min-width: 300px; /* Mínimo para celular */
-  margin: 0 auto; /* Centraliza horizontalmente */
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  text-align: center; /* Centraliza texto e elementos */
-}
+/* src/App.css */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',sans-serif; background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); min-height:100vh; color:#fff; }
 
-h1 {
-  color: #333;
-  font-size: 1.5rem; /* Tamanho ajustado para telas menores */
-  margin-bottom: 1rem;
-}
+.app-container { display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; }
+.mentor-card { background:rgba(255,255,255,0.1); backdrop-filter:blur(15px); border-radius:20px; max-width:900px; width:100%; box-shadow:0 20px 40px rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.2); overflow:hidden; }
 
-.text-input {
-  width: 90%; /* Usa 90% para evitar bordas nas laterais em telas pequenas */
-  padding: 10px;
-  margin-top: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: vertical;
-  display: block; /* Garante que fique centralizado */
-  margin-left: auto;
-  margin-right: auto;
-}
+.header { text-align:center; padding:30px 20px; background:linear-gradient(to right,#004d99,#0077cc); }
+h1 { font-size:2.8rem; margin-bottom:8px; }
+.subtitle { font-size:1.2rem; opacity:0.9; }
 
-.button {
-  display: block; /* Garante que fique centralizado */
-  margin: 1rem auto; /* Centraliza e adiciona espaçamento */
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
+.main-content { padding:30px; }
+.input-area { margin-bottom:30px; }
+.pergunta-input { width:100%; padding:18px; border:none; border-radius:15px; background:rgba(255,255,255,0.15); color:white; font-size:1.1rem; resize:none; outline:none; backdrop-filter:blur(10px); }
+.pergunta-input::placeholder { color:rgba(255,255,255,0.6); }
 
-.button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
+.send-btn { margin-top:15px; width:100%; padding:16px; background:linear-gradient(45deg,#00aaff,#0077cc); color:white; border:none; border-radius:15px; font-size:1.2rem; font-weight:bold; cursor:pointer; transition:0.3s; }
+.send-btn:hover:not(:disabled) { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,170,255,0.4); }
+.send-btn:disabled { opacity:0.6; cursor:not-allowed; }
 
-.response-container {
-  margin-top: 1.5rem;
-  padding: 10px;
-  background-color: #e9ecef;
-  border-radius: 5px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  max-width: 90%; /* Limita a largura em telas menores */
-  margin-left: auto;
-  margin-right: auto; /* Centraliza */
-  text-align: left; /* Mantém o texto da resposta alinhado à esquerda */
+.resposta-area { margin-top:30px; }
+.resposta-card { background:rgba(255,255,255,0.15); border-radius:18px; padding:25px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2); }
+.resposta-texto { white-space:pre-wrap; font-family:monospace; font-size:1rem; line-height:1.6; background:#111; color:#0f0; padding:20px; border-radius:10px; overflow-x:auto; }
+
+.latex-botoes { margin-top:25px; display:flex; gap:15px; flex-wrap:wrap; justify-content:center; }
+.btn-copiar, .btn-overleaf {
+  padding:14px 28px; border:none; border-radius:50px; font-weight:bold; font-size:1.1rem;
+  cursor:pointer; transition:all 0.3s; text-decoration:none; text-align:center;
 }
+.btn-copiar { background:linear-gradient(45deg,#2ecc71,#27ae60); color:white; }
+.btn-overleaf { background:linear-gradient(45deg,#e74c3c,#c0392b); color:white; }
+.btn-copiar:hover, .btn-overleaf:hover { transform:scale(1.05); }
+
+.footer { text-align:center; padding:20px; font-size:0.9rem; opacity:0.7; background:rgba(0,0,0,0.2); }
+
+@media (max-width:600px) { h1{font-size:2.2rem;} .main-content{padding:20px;} }
